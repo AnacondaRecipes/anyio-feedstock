@@ -9,9 +9,15 @@ source:
   - folder: dist
     url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
     sha256: 35075abd32cf20fd7e0be2fee3614e80b92d5392eba257c8d2f33de3df7ca237
+    patches:
+      # we skip a single test because of our kernel version
+      - 0001-skip-test-on-linux.patch  # [linux]
   - folder: src
     url: https://github.com/agronholm/{{ name }}/archive/{{ version }}.tar.gz
     sha256: 2439f9d71d793d72d4e223632b9ef8beafc021989efac7b049f0c73280322d2a
+    patches:
+      # we skip a single test because of our kernel version
+      - 0001-skip-test-on-linux.patch  # [linux]
 
 build:
   number: 2
