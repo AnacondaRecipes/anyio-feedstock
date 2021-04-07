@@ -20,13 +20,15 @@ source:
       - 0001-skip-test-if-reuseport-is-not-available-src.patch
 
 build:
-  number: 0
+  number: 1
   script: cd dist && {{ PYTHON }} -m pip install . -vv --no-deps
   skip: true  # [py<36]
 
 requirements:
   build:
     - python                                 # [build_platform != target_platform]
+    - m2-patch                               # [win]
+    - patch                                  # [not win]
   host:
     - pip
     - python
