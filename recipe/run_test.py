@@ -11,7 +11,7 @@ except Exception as err:
     print(f"... uvloop import error, ignoring:\n{err}")
 
 COV_THRESHOLD = {
-    "win32": "68",
+    "win32": "67",
     "linux": "71",
     "darwin": "71"
 }.get(sys.platform)

@@ -18,9 +18,10 @@ source:
     patches:
       # we skip a single test because of our kernel version
       - 0001-skip-test-if-reuseport-is-not-available-src.patch
+      - 0003-patch-network.patch  # [win]
 
 build:
-  number: 1
+  number: 2
   script: cd dist && {{ PYTHON }} -m pip install . -vv --no-deps
   skip: true  # [py<36]
 
@@ -59,6 +60,7 @@ test:
     - trustme
     # TODO: won't be available on pypy
     - uvloop  # [unix and python_impl == 'cpython']
+    - ruamel_yaml  # [win]
   imports:
     - anyio
   commands:
