@@ -1,5 +1,5 @@
 {% set name = "anyio" %}
-{% set version = "2.2.0" %}
+{% set version = "3.4.0" %}
 
 package:
   name: {{ name|lower }}
@@ -8,17 +8,17 @@ package:
 source:
   - folder: dist
     url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-    sha256: 4a41c5b3a65ed92e469d51b6fba3779301850ea2e352afcf9e36c46f21ee14a9
-    patches:
-      # we skip a single test because of our kernel version
-      - 0002-skip-test-if-reuseport-is-not-available-dist.patch
+    sha256: 24adc69309fb5779bc1e06158e143e0b6d2c56b302a3ac3de3083c705a6ed39d
+#    patches:
+#      # we skip a single test because of our kernel version
+#      - 0002-skip-test-if-reuseport-is-not-available-dist.patch
   - folder: src
     url: https://github.com/agronholm/{{ name }}/archive/{{ version }}.tar.gz
-    sha256: c1b748c399cc1051af7663d9765777d695534c17943285403c5bce993a34cd20
-    patches:
-      # we skip a single test because of our kernel version
-      - 0001-skip-test-if-reuseport-is-not-available-src.patch
-      - 0003-patch-network.patch  # [win]
+    sha256: 5dcba2e18b951cb35108bfd0e45cce4f6bf9723904ccd911f123843c9db5efa6
+#    patches:
+#      # we skip a single test because of our kernel version
+#      - 0001-skip-test-if-reuseport-is-not-available-src.patch
+#      - 0003-patch-network.patch  # [win]
 
 build:
   number: 2
@@ -33,9 +33,9 @@ requirements:
   host:
     - pip
     - python
-    - setuptools_scm
+    - setuptools-scm >=3.4
   run:
-    - async_generator  # [py<37]
+    - contextvars  # [py<37]
     - dataclasses  # [py<37]
     - idna >=2.8
     - python
@@ -43,22 +43,24 @@ requirements:
     - typing_extensions  # [py<38]
   run_constrained:
     - trio >=0.16
-    - curio >=1.4
 
 test:
   source_files:
     - src/tests
+    - src/pyproject.toml
   requires:
+    - contextlib2  # [py<37]
     - coverage >=4.5
-    - curio
+    - trio
     - hypothesis >=4.0
+    - mock >=4
     - pip
     - pytest >=6.0
     - pytest-cov
+    - pytest-mock >=3.6.1
     - toml
-    - trio
     - trustme
-    # TODO: won't be available on pypy
+    # won't be available on pypy, or windows, any time soon
     - uvloop  # [unix and python_impl == 'cpython']
     - ruamel_yaml  # [win]
   imports:
