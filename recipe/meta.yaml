@@ -70,7 +70,8 @@ test:
     - pip check
   # To check if downstream packages run without errors
   downstreams:
-    - jupyter_server
+    # Testing jupyter_server sometimes fails in win platforms
+    - jupyter_server  # [unix]
 
 about:
   home: https://github.com/agronholm/anyio
