@@ -9,16 +9,9 @@ source:
   - folder: dist
     url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
     sha256: a0aeffe2fb1fdf374a8e4b471444f0f3ac4fb9f5a5b542b48824475e0042a5a6
-#    patches:
-#      # we skip a single test because of our kernel version
-#      - 0002-skip-test-if-reuseport-is-not-available-dist.patch
   - folder: src
     url: https://github.com/agronholm/{{ name }}/archive/{{ version }}.tar.gz
     sha256: 55a37ea9eb2092d435af148b42a10005ee62ec7eb7d7a12d73c88e2b8aca5e38
-#    patches:
-#      # we skip a single test because of our kernel version
-#      - 0001-skip-test-if-reuseport-is-not-available-src.patch
-#      - 0003-patch-network.patch  # [win]
 
 build:
   number: 0
