@@ -15,8 +15,9 @@ source:
 
 build:
   number: 0
+  # trigger: 0
   script: cd dist && {{ PYTHON }} -m pip install . -vv --no-deps
-  skip: true  # [py<36 or s390x]
+  skip: true  # [py<36]
 
 requirements:
   build:
