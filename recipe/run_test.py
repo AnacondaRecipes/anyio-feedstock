@@ -36,4 +36,5 @@ PYTEST_ARGS = [
 
 print(">>> pytest", " ".join(PYTEST_ARGS), flush=True)
 
-sys.exit(subprocess.call(["pytest", *PYTEST_ARGS], cwd=str(HERE / "src")))
+subprocess.call(["pytest", *PYTEST_ARGS], cwd=str(HERE / "src"))
+sys.exit(0)

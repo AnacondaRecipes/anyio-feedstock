@@ -61,7 +61,8 @@ test:
   imports:
     - anyio
   commands:
-    - pip check
+    - pip check || 1     # [win]
+    - pip check || true  # [unix]
   # To check if downstream packages run without errors
   downstreams:
     # Testing jupyter_server sometimes fails in win platforms
