@@ -38,28 +38,24 @@ test:
   source_files:
     - src/tests
   requires:
-    - trio
-    - toml
-    - exceptiongroup >= 1.2.0
+    - coverage >=7
+    - exceptiongroup >=1.2.0
     - hypothesis >=4.0
+    - mock >=4
     - pip
     - psutil >=5.9
     - pytest >=7.0
     - pytest-cov
     - pytest-mock >=3.6.1
+    - tomli
+    - trio
     - trustme
     # won't be available on pypy, or windows, any time soon
     - uvloop >=0.17  # [unix and python_impl == 'cpython']
-    # - ruamel_yaml  # [win]
   imports:
     - anyio
   commands:
-    - pip check || 1     # [win]
-    - pip check || true  # [unix]
-  # To check if downstream packages run without errors
-  downstreams:
-    # Testing jupyter_server sometimes fails in win platforms
-    - jupyter_server  # [unix]
+    - pip check
 
 about:
   home: https://github.com/agronholm/anyio
