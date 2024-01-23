@@ -27,6 +27,7 @@ requirements:
     - toml
     - wheel
   run:
+    - python
     - exceptiongroup >=1.0.2  # [py<311]
     - idna >=2.8
     - sniffio >=1.1
@@ -59,13 +60,16 @@ test:
 
 about:
   home: https://github.com/agronholm/anyio
+  description: |
+    AnyIO is an asynchronous networking and concurrency library that works on top of
+    either asyncio or trio. It implements trio-like structured concurrency (SC) on top of
+    asyncio and works in harmony with the native SC of trio itself.
   license: MIT
   license_family: MIT
   license_file: dist/LICENSE
   summary: High level compatibility layer for multiple asynchronous event loop implementations on Python
   dev_url: https://github.com/agronholm/anyio
   doc_url: https://anyio.readthedocs.io
-  doc_source_url: https://github.com/agronholm/anyio/tree/{{ version }}/docs
 
 extra:
   recipe-maintainers:
