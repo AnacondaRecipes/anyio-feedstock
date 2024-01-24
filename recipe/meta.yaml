@@ -6,16 +6,12 @@ package:
   version: {{ version }}
 
 source:
-  - folder: dist
-    url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-    sha256: e1875bb4b4e2de1669f4bc7869b6d3f54231cdced71605e6e64c9be77e3be50f
-  - folder: src
-    url: https://github.com/agronholm/{{ name }}/archive/{{ version }}.tar.gz
-    sha256: 64e2b1158ace6fee6c990ab78ee79707c0dea3f7f833a9541cd6ad056802ff87
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: e1875bb4b4e2de1669f4bc7869b6d3f54231cdced71605e6e64c9be77e3be50f
 
 build:
   number: 0
-  script: cd dist && {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   skip: true  # [py<38]
 
 requirements:
@@ -38,26 +34,24 @@ requirements:
 
 test:
   source_files:
-    - src/tests
+    - tests
+    - pyproject.toml
   requires:
-    - coverage >=7
     - exceptiongroup >=1.2.0
     - hypothesis >=4.0
-    - mock >=4
     - pip
     - psutil >=5.9
     - pytest >=7.0
-    - pytest-cov
     - pytest-mock >=3.6.1
     - tomli
     - trio
     - trustme
-    # won't be available on pypy, or windows, any time soon
-    - uvloop >=0.17  # [unix and python_impl == 'cpython']
+    - uvloop >=0.17  # [unix]
   imports:
     - anyio
   commands:
     - pip check
+    - pytest -vv -ra -m "not network"
 
 about:
   home: https://github.com/agronholm/anyio
@@ -67,7 +61,7 @@ about:
     asyncio and works in harmony with the native SC of trio itself.
   license: MIT
   license_family: MIT
-  license_file: dist/LICENSE
+  license_file: LICENSE
   summary: High level compatibility layer for multiple asynchronous event loop implementations on Python
   dev_url: https://github.com/agronholm/anyio
   doc_url: https://anyio.readthedocs.io
