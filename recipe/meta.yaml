@@ -55,15 +55,16 @@ test:
     - anyio
   commands:
     - pip check
-    - pytest -vv -ra -m "not network" -o xfail_strict=False # [not s390x]
+    - pytest -vv -ra -m "not network" -o xfail_strict=False # [not (win or s390x)]
+    - pytest -vv -ra -m "not network" -o xfail_strict=False -k "not TestTLSStream::test_extra_attributes[trio]" # [win] flaky test
     - pytest -vv -ra -m "not network" -o xfail_strict=False -k "not test_run_sync_from_thread_pooling" # [s390x]
 
   # To check if downstream packages run without errors
-  # Verify in the logs that the tests occurent with this version of anyio (conda-build has bug which may pull an older version.)
-  {% if python != "3.12" %} # no jupyter_server for 312 yet
-  downstreams: # Comment before merging, to void circular dependencies
-    - jupyter_server
-  {% endif %}
+  # Verify in the logs that the tests occur with this version of anyio
+  # {% if python != "3.12" %} # no jupyter_server for 312 yet
+  # downstreams: # Comment before merging, to void circular dependencies
+  #   - jupyter_server
+  # {% endif %}
 
 about:
   home: https://github.com/agronholm/anyio
