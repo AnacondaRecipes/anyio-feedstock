@@ -29,8 +29,8 @@ requirements:
     - sniffio >=1.1
     - typing_extensions >=4.1  # [py<311]
   run_constrained:
-    - trio >=0.23
-    - uvloop >=0.17
+    - trio >=0.26.1
+    - uvloop >=0.21.0b1
 
 test:
   source_files:
