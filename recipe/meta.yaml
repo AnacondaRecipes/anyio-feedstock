@@ -1,5 +1,5 @@
 {% set name = "anyio" %}
-{% set version = "4.2.0" %}
+{% set version = "4.5.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: e1875bb4b4e2de1669f4bc7869b6d3f54231cdced71605e6e64c9be77e3be50f
+  sha256: c5a275fe5ca0afd788001f58fca1e69e29ce706d746e317d660e21f70c530ef9
   patches: # [unix]
     - patches/0001-Modify-unix-socket-tests-to-use-stdlib-tempdirs.patch # [unix]
 
@@ -63,7 +63,7 @@ test:
   # Verify in the logs that the tests occur with this version of anyio
   # {% if python != "3.12" %} # no jupyter_server for 312 yet
   # downstreams: # Comment before merging, to void circular dependencies
-  #   - jupyter_server
+    - jupyter_server
   # {% endif %}
 
 about:
