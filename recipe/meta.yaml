@@ -1,5 +1,5 @@
 {% set name = "anyio" %}
-{% set version = "4.5.0" %}
+{% set version = "4.6.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,12 +7,12 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: c5a275fe5ca0afd788001f58fca1e69e29ce706d746e317d660e21f70c530ef9
+  sha256: 137b4559cbb034c477165047febb6ff83f390fc3b20bf181c1fc0a728cb8beeb
 
 build:
   number: 0
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  skip: true  # [py<38]
+  skip: true  # [py<39]
 
 requirements:
   host:
@@ -30,7 +30,7 @@ requirements:
     - typing_extensions >=4.1  # [py<311]
   run_constrained:
     - trio >=0.26.1
-    - uvloop >=0.21.0b1
+    - uvloop >=0.21
 
 test:
   source_files:
@@ -43,24 +43,25 @@ test:
     - psutil >=5.9
     - pytest >=7.0
     - pytest-mock >=3.6.1
+    - pytest-timeout
     - tomli
     - trio
     - trustme
-    - uvloop >=0.17  # [unix]
+    # Latest version of uvloop is a pre-release
+    # - uvloop 0.19.0  # [unix]
   imports:
     - anyio
   commands:
     - pip check
+    - pytest -vv tests --timeout 300
     - pytest -vv -ra -m "not network" -o xfail_strict=False # [not (win or s390x)]
     - pytest -vv -ra -m "not network" -o xfail_strict=False -k "not TestTLSStream::test_extra_attributes[trio]" # [win] flaky test
     - pytest -vv -ra -m "not network" -o xfail_strict=False -k "not test_run_sync_from_thread_pooling" # [s390x]
 
   # To check if downstream packages run without errors
   # Verify in the logs that the tests occur with this version of anyio
-  # {% if python != "3.12" %} # no jupyter_server for 312 yet
   # downstreams: # Comment before merging, to void circular dependencies
-    - jupyter_server
-  # {% endif %}
+    # - jupyter server
 
 about:
   home: https://github.com/agronholm/anyio
