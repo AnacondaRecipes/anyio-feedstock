@@ -30,7 +30,7 @@ requirements:
     - typing_extensions >=4.1  # [py<311]
   run_constrained:
     - trio >=0.26.1
-    - uvloop >=0.21
+    - uvloop >=0.21  # [not win]
 
 test:
   source_files:
