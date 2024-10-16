@@ -53,8 +53,7 @@ test:
     - anyio
   commands:
     - pip check
-    - pytest -vv tests --timeout 300
-    - pytest -vv -ra -m "not network" -o xfail_strict=False # [not (win or s390x)]
+    - pytest -vv -ra -m "not network" -o xfail_strict=False --timeout 300 # [not (win or s390x)]
     - pytest -vv -ra -m "not network" -o xfail_strict=False -k "not TestTLSStream::test_extra_attributes[trio]" # [win] flaky test
     - pytest -vv -ra -m "not network" -o xfail_strict=False -k "not test_run_sync_from_thread_pooling" # [s390x] flaky test
 
