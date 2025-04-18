@@ -1,5 +1,5 @@
 {% set name = "anyio" %}
-{% set version = "4.6.2" %}
+{% set version = "4.7.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: f72a7bb3dd0752b3bd8b17a844a019d7fbf6ae218c588f4f9ba1b2f600b12347
+  sha256: 2f834749c602966b7d456a7567cafcb309f96482b5081d14ac93ccd457f9dd48
 
 build:
   number: 0
@@ -27,7 +27,7 @@ requirements:
     - exceptiongroup >=1.0.2  # [py<311]
     - idna >=2.8
     - sniffio >=1.1
-    - typing_extensions >=4.1  # [py<311]
+    - typing_extensions >=4.5  # [py<313]
   run_constrained:
     - trio >=0.26.1
     - uvloop >=0.21  # [not win]
@@ -48,7 +48,8 @@ test:
     - trio
     - trustme
     # Latest version of uvloop is a pre-release
-    # - uvloop 0.19.0  # [unix]
+    - uvloop 0.21.0  # [unix]
+
   imports:
     - anyio
   commands:
