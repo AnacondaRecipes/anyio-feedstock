@@ -46,7 +46,6 @@ test:
     - tomli
     - trio
     - trustme
-    - truststore >= 0.9.1 # [py<310]
     # Latest version of uvloop is a pre-release
     - uvloop 0.21.0  # [unix and py<314]
   imports:
