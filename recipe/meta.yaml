@@ -1,5 +1,5 @@
 {% set name = "anyio" %}
-{% set version = "4.10.0" %}
+{% set version = "4.12.1" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 3f3fae35c96039744587aa5b8371e7e8e603c0702999535961dd336026973ba6
+  sha256: 41cfcc3a4c85d3f05c932da7c26d0201ac36f72abd4435ba90d0464a3ffed703
 
 build:
   number: 0
@@ -52,9 +52,9 @@ test:
     - anyio
   commands:
     - pip check
-    - pytest -vv -ra -m "not network" -o xfail_strict=False --timeout 300 # [not (win or s390x)]
-    - pytest -vv -ra -m "not network" -o xfail_strict=False -k "not TestTLSStream::test_extra_attributes[trio]" # [win] flaky test
-    - pytest -vv -ra -m "not network" -o xfail_strict=False -k "not test_run_sync_from_thread_pooling" # [s390x] flaky test
+    - pytest -vv -ra -m "not network" -o xfail_strict=False --timeout 300  # [not (win or s390x)]
+    - pytest -vv -ra -m "not network" -o xfail_strict=False -k "not TestTLSStream::test_extra_attributes[trio]"  # [win] flaky test
+    - pytest -vv -ra -m "not network" -o xfail_strict=False -k "not test_run_sync_from_thread_pooling"  # [s390x] flaky test
 
 about:
   home: https://github.com/agronholm/anyio
