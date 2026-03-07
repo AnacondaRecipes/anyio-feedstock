@@ -20,23 +20,20 @@ requirements:
     - python
     - setuptools-scm >=6.4
     - setuptools >=77
-    - wheel
   run:
     - python
     - exceptiongroup >=1.0.2  # [py<311]
     - idna >=2.8
-    - sniffio >=1.1
     - typing_extensions >=4.5  # [py<313]
   run_constrained:
-    - trio >=0.26.1
-    - uvloop >=0.21  # [not win]
+    - trio >=0.31.0  #[py<310]
+    - trio >=0.32.0  #[py>=310]
 
 test:
   source_files:
     - tests
     - pyproject.toml
   requires:
-    - exceptiongroup >=1.2.0
     - hypothesis >=4.0
     - pip
     - psutil >=5.9
@@ -46,15 +43,13 @@ test:
     - tomli
     - trio
     - trustme
-    # Latest version of uvloop is a pre-release
-    - uvloop 0.21.0  # [unix and py<314]
+    - uvloop >=0.21.0  # [unix]
+    - exceptiongroup >=1.2.0
   imports:
     - anyio
   commands:
     - pip check
-    - pytest -vv -ra -m "not network" -o xfail_strict=False --timeout 300  # [not (win or s390x)]
-    - pytest -vv -ra -m "not network" -o xfail_strict=False -k "not TestTLSStream::test_extra_attributes[trio]"  # [win] flaky test
-    - pytest -vv -ra -m "not network" -o xfail_strict=False -k "not test_run_sync_from_thread_pooling"  # [s390x] flaky test
+    - pytest -v -m "not network" tests
 
 about:
   home: https://github.com/agronholm/anyio
