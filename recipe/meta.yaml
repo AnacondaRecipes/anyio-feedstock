@@ -1,5 +1,5 @@
 {% set name = "anyio" %}
-{% set version = "4.10.0" %}
+{% set version = "4.12.1" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 3f3fae35c96039744587aa5b8371e7e8e603c0702999535961dd336026973ba6
+  sha256: 41cfcc3a4c85d3f05c932da7c26d0201ac36f72abd4435ba90d0464a3ffed703
 
 build:
   number: 0
@@ -20,23 +20,20 @@ requirements:
     - python
     - setuptools-scm >=6.4
     - setuptools >=77
-    - wheel
   run:
     - python
     - exceptiongroup >=1.0.2  # [py<311]
     - idna >=2.8
-    - sniffio >=1.1
     - typing_extensions >=4.5  # [py<313]
   run_constrained:
-    - trio >=0.26.1
-    - uvloop >=0.21  # [not win]
+    - trio >=0.31.0  #[py<310]
+    - trio >=0.32.0  #[py>=310]
 
 test:
   source_files:
     - tests
     - pyproject.toml
   requires:
-    - exceptiongroup >=1.2.0
     - hypothesis >=4.0
     - pip
     - psutil >=5.9
@@ -46,15 +43,13 @@ test:
     - tomli
     - trio
     - trustme
-    # Latest version of uvloop is a pre-release
-    - uvloop 0.21.0  # [unix and py<314]
+    - uvloop >=0.21.0  # [unix]
+    - exceptiongroup >=1.2.0
   imports:
     - anyio
   commands:
     - pip check
-    - pytest -vv -ra -m "not network" -o xfail_strict=False --timeout 300 # [not (win or s390x)]
-    - pytest -vv -ra -m "not network" -o xfail_strict=False -k "not TestTLSStream::test_extra_attributes[trio]" # [win] flaky test
-    - pytest -vv -ra -m "not network" -o xfail_strict=False -k "not test_run_sync_from_thread_pooling" # [s390x] flaky test
+    - pytest -v -m "not network" tests
 
 about:
   home: https://github.com/agronholm/anyio
