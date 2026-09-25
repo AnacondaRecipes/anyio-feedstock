@@ -20,9 +20,6 @@ build:
   skip: true  # [py<36]
 
 requirements:
-  build:
-    - m2-patch                               # [win]
-    - patch                                  # [not win]
   host:
     - pip
     - python
